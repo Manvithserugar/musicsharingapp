@@ -1,0 +1,42 @@
+.display-list {
+  margin: 20px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.display-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.display-list div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.display-list-item img{
+    height: 40px;
+    width: 40px;
+    border-radius: 4px;
+}
+
+.display-list-item:hover{
+    transform: scale(1.02);
+    background-color: #17273c;
+    border-radius: 10px;
+}
+
+.display-list-item:last-child {
+  border-bottom: none;
+}
