@@ -1,0 +1,47 @@
+const mongoose = require("mongoose");
+
+const { authenticateUser } = require("../../services/auth");
+const { generateAccessToken } = require("./utils");
+const { appError } = require("../../utils");
+
+module.exports = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  let session;
+
+  try {
+    session = await mongoose.startSession(); // Start a session
+    session.startTransaction();
+
+    const user = await authenticateUser(email, password, { session }); // Pass session to authenticateUser
+    if (!user) {
+      await session.abortTransaction(); // Abort transaction if user not found
+      session.endSession();
+      return next(new appError("No such user found", 404)); // Proper status code for "not found"
+    }
+
+    const token = generateAccessToken(user);
+
+    await session.commitTransaction(); // Commit the transaction
+
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      path: "/",
+      maxAge: 60 * 60 * 1000,
+    });
+
+    res.status(200).json({ message: "user logged in" });
+  } catch (error) {
+    console.log("error logging in", error);
+
+    if (session) {
+      await session.abortTransaction(); // Rollback transaction on error
+    }
+
+    next(error);
+  } finally {
+    if (session) {
+      session.endSession(); // Ensure session is ended
+    }
+  }
+};

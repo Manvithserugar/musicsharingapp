@@ -1,0 +1,22 @@
+body {
+  /* background-color: white; */
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 400px; /* Suitable width for the forms */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}

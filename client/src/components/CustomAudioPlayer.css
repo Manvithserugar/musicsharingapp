@@ -1,0 +1,11 @@
+.audio-player {
+  display: flex;
+  padding: 20px;
+  margin: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  height: 10vh;
+  background: #001427;
+}
