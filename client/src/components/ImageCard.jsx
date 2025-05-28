@@ -2,12 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./ImageCard.css";
 
-function ImageCard({ className, imageUrl, children, redirectUrl, onClick }) {
+function ImageCard({
+  className,
+  imageUrl,
+  children,
+  redirectUrl,
+  redirectProps,
+  onClick,
+}) {
   if (redirectUrl) {
     // If redirectUrl is provided, use Link for navigation
     return (
       <Link
         to={redirectUrl}
+        state={redirectProps}
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <div className={className}>

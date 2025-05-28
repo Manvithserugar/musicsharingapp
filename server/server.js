@@ -12,7 +12,14 @@ const {
   authenticateJWT,
 } = require("./config");
 
-const { auth, tracks, search, artists } = require("./routes");
+const {
+  auth,
+  tracks,
+  search,
+  artists,
+  userData,
+  playlists,
+} = require("./routes");
 
 const { globalErrorHandler } = require("./middlewares");
 
@@ -49,12 +56,22 @@ app.use(
   "/uploads/artists",
   express.static(path.join(__dirname, "uploads/artists"))
 );
+app.use(
+  "/uploads/playlistsCoverImage",
+  express.static(path.join(__dirname, "uploads/playlistsCoverImage"))
+);
+app.use(
+  "/uploads/banner",
+  express.static(path.join(__dirname, "uploads/banner"))
+);
 
 app.use(auth);
 // app.use(authenticateJWT);
 app.use(tracks);
 app.use(search);
-// app.use(artists);
+app.use(userData);
+app.use(playlists);
+app.use(artists);
 
 app.all("*", (req, res, next) => {
   next(new appError(`Cannot find ${req.originalUrl} on this server`, 404));

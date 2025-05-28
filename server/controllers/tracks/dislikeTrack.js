@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     await session.commitTransaction();
     res
       .status(200)
-      .json({ message: "Music disliked successfully", updatedTrack });
+      .json({ message: "Music disliked successfully", success: true });
   } catch (error) {
     if (session) {
       await session.abortTransaction();

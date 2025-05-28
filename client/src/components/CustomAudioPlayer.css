@@ -1,11 +1,52 @@
-.audio-player {
-  display: flex;
-  padding: 20px;
-  margin: 10px;
-  margin-bottom: 20px;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-  height: 10vh;
-  background: #001427;
+.progress-bar-range {
+  --bar-bg: #269bc9;
+  --seek-before-width: 0;
+  --seek-before-color: #004864;
+  --knobby: #fff;
+
+  appearance: none;
+  background: var(--bar-bg);
+  width: 25vw;
+  height: 0.7vh;
+  position: relative;
+}
+
+.progress-bar-range::before {
+  content: "";
+  height: 0.7vh;
+  width: var(--seek-before-width);
+  background-color: var(--seek-before-color);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  position: absolute;
+  top: 50%; /* Center the filled bar vertically */
+  left: 0;
+  transform: translateY(-50%); /* Correct centering */
+  z-index: 1; /* Ensure it's below the knob */
+  max-width: 100%;
+}
+
+/* Knobby - Chrome and Safari */
+.progress-bar-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--knobby);
+  cursor: pointer;
+  z-index: 2; /* Ensure it's above the filled bar */
+  position: relative; /* Needed for z-index to take effect */
+  box-sizing: border-box;
+}
+
+/* Knobby while dragging - Chrome and Safari */
+.progress-bar-range:active::-webkit-slider-thumb {
+  transform: scale(1.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.progress-bar-range:hover::-webkit-slider-thumb {
+  transform: scale(1.1);
+  transition: all 0.3s ease-in-out;
 }

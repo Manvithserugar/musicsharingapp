@@ -1,10 +1,13 @@
 const { appError } = require("../../utils");
 const { uploadTrack } = require("../../services");
+const path = require("path");
+const fs = require("fs");
 
 module.exports = async (req, res, next) => {
+  let musicFilePath;
+  let thumbnailFilePath;
   try {
-    const { name, artist, album } = req.body;
-    const artistId = req.user._id;
+    const { name, artist, artistId, album } = req.body;
 
     if (!req.files || !req.files.musicFile || !req.files.thumbnail) {
       return next(
@@ -15,8 +18,28 @@ module.exports = async (req, res, next) => {
     const musicFileName = req.files.musicFile[0].filename;
     const thumbnailName = req.files.thumbnail[0].filename;
 
-    const musicFileUrl = `http://localhost:3000/uploads/thumbnails/${musicFileName}`;
-    const thumbnailUrl = `http://localhost:3000/uploads/thumbnails/${thumbnailName}`;
+    let musicFileUrl = null;
+    let thumbnailUrl = null;
+
+    if (musicFileName) {
+      musicFileUrl = `http://localhost:3000/uploads/thumbnails/${musicFileName}`;
+
+      musicFilePath = path.join(
+        __dirname,
+        "../../uploads/musicFiles",
+        musicFileName
+      );
+    }
+
+    if (thumbnailName) {
+      thumbnailFilePath = path.join(
+        __dirname,
+        "../../uploads/thumbnails",
+        thumbnailName
+      );
+
+      thumbnailUrl = `http://localhost:3000/uploads/thumbnails/${thumbnailName}`;
+    }
 
     const track = await uploadTrack(
       name,
@@ -29,6 +52,13 @@ module.exports = async (req, res, next) => {
 
     res.status(201).json({ message: "Track uploaded successfully.", track });
   } catch (error) {
+    console.log("Error while uploading track (controller): ", error);
+    if (thumbnailFilePath && fs.existsSync(thumbnailFilePath)) {
+      fs.unlinkSync(thumbnailFilePath);
+    }
+    if (musicFilePath && fs.existsSync(musicFilePath)) {
+      fs.unlinkSync(musicFilePath);
+    }
     next(error);
   }
 };

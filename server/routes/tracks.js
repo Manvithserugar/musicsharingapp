@@ -9,6 +9,8 @@ const {
   streamTrack,
   likeTrack,
   dislikeTrack,
+  saveTrack,
+  unsaveTrack,
 } = require("../controllers");
 const { uploadMiddleware } = require("../middlewares");
 const { authenticateJWT } = require("../config");
@@ -26,6 +28,12 @@ router.get(`${apiBasePath}/:id`, getTrack);
 router.delete(`${apiBasePath}/:id`, [authenticateJWT], deleteTrack);
 router.get(`${apiBasePath}/:id/stream`, [authenticateJWT], streamTrack);
 router.post(`${apiBasePath}/:trackId/like`, [authenticateJWT], likeTrack);
-router.post(`${apiBasePath}/:trackId/dislike`, [authenticateJWT], dislikeTrack);
+router.delete(
+  `${apiBasePath}/:trackId/dislike`,
+  [authenticateJWT],
+  dislikeTrack
+);
+router.post(`${apiBasePath}/:trackId/save`, [authenticateJWT], saveTrack);
+router.delete(`${apiBasePath}/:trackId/unsave`, [authenticateJWT], unsaveTrack);
 
 module.exports = router;

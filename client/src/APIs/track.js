@@ -21,7 +21,12 @@ const getTrack = async (id) => {
 
 const uploadTrack = async (track) => {
   try {
-    const response = await axios.post(`${config.baseURL}/tracks/upload`, track);
+    const headers = { "Content-Type": "multipart/form-data" };
+    const response = await axios.post(
+      `${config.baseURL}/tracks/upload`,
+      track,
+      { headers }
+    );
     return response;
   } catch (error) {
     throw error;
@@ -48,18 +53,42 @@ const likeTrack = async (id) => {
 
 const dislikeTrack = async (id) => {
   try {
-    const response = await axios.post(`${config.baseURL}/tracks/${id}/dislike`);
+    const response = await axios.delete(
+      `${config.baseURL}/tracks/${id}/dislike`
+    );
     return response;
   } catch (error) {
     throw error;
   }
 };
 
-export default {
+const saveTrack = async (id) => {
+  try {
+    const response = await axios.post(`${config.baseURL}/tracks/${id}/save`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const unsaveTrack = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${config.baseURL}/tracks/${id}/unsave`
+    );
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
   uploadTrack,
   getTopTracks,
   getTrack,
   deleteTrack,
   likeTrack,
   dislikeTrack,
+  saveTrack,
+  unsaveTrack,
 };

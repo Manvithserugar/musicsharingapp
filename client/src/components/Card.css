@@ -1,7 +1,7 @@
 .card-left-panel,
 .card-right-panel {
   border-radius: 10px;
-  background-color: rgb(17, 31, 51);
+  background-color: var(--color-secondary);
   padding: 15px;
   margin: 20px;
   box-sizing: border-box;
@@ -18,29 +18,4 @@
   height: 100%;
   margin-left: 0;
   width: 75vw;
-}
-
-/* Scrollbar styling for WebKit browsers (Chrome, Edge, Safari) */
-.card-left-panel::-webkit-scrollbar,
-.card-right-panel::-webkit-scrollbar {
-  width: 12px; /* Scrollbar width */
-  border-radius: 10px;
-}
-
-.card-left-panel::-webkit-scrollbar-track,
-.card-right-panel::-webkit-scrollbar-track {
-  background: #1d1b29; /* Track color */
-  border-radius: 10px;
-}
-
-.card-left-panel::-webkit-scrollbar-thumb,
-.card-right-panel::-webkit-scrollbar-thumb {
-  background: #3a3a50; /* Thumb color */
-  border-radius: 10px;
-  border: 3px solid #171323; /* Matches the background */
-}
-
-.card-left-panel::-webkit-scrollbar-thumb:hover,
-.card-right-panel::-webkit-scrollbar-thumb:hover {
-  background: #505068; /* Thumb hover color */
 }

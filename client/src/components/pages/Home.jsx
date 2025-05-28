@@ -5,13 +5,12 @@ import Itachi from "../../assets/Itachi.png";
 import Gojo from "../../assets/Gojo.png";
 import Frieren from "../../assets/Frieren.jpg";
 import singer1 from "../../assets/singer1.png";
-import singer2 from "../../assets/singer2.png";
-import singer3 from "../../assets/singer3.png";
 import "./Home.css";
-import trackAPI from "../../APIs/track";
-import useErrorHandler from "../../hooks/useErrorHandler";
+import { getTopTracks } from "../../APIs";
+import { useErrorHandler, useFetch } from "../../hooks";
 import { useDispatch } from "react-redux";
 import { showPlayer } from "../../store/audioPlayerSlice";
+import config from "../../config";
 
 const Home = () => {
   const [topTracks, setTopTracks] = useState([]);
@@ -21,7 +20,7 @@ const Home = () => {
   useEffect(() => {
     const fetchTopTracks = async () => {
       try {
-        const response = await trackAPI.getTopTracks();
+        const response = await getTopTracks();
         setTopTracks(response.topTracks);
       } catch (error) {
         handleError(error);
@@ -31,8 +30,15 @@ const Home = () => {
     fetchTopTracks();
   }, []);
 
-  const handlePlayTrack = (trackId) => {
-    dispatch(showPlayer(trackId));
+  const {
+    data: topArtists,
+    loading,
+    error,
+  } = useFetch(`${config.baseURL}/artists/top`);
+  console.log("Top Artists:", topArtists);
+
+  const handlePlayTrack = (trackDetails) => {
+    dispatch(showPlayer(trackDetails));
   };
 
   return (
@@ -40,54 +46,20 @@ const Home = () => {
       <div className="home">
         <h2>Popular Artists</h2>
         <div className="rows">
-          <ImageCard
-            className="popular artists"
-            imageUrl={Itachi}
-            redirectUrl="/artist1"
-          >
-            <h5>Artist 1</h5>
-            <p>Artist</p>
-          </ImageCard>
-          <ImageCard
-            className="popular artists"
-            imageUrl={Gojo}
-            redirectUrl="/artist1"
-          >
-            <h5>Artist 2</h5>
-            <p>Artist</p>
-          </ImageCard>
-          <ImageCard
-            className="popular artists"
-            imageUrl={Frieren}
-            redirectUrl="/artist1"
-          >
-            <h5>Artist 3</h5>
-            <p>Artist</p>
-          </ImageCard>
-          <ImageCard
-            className="popular artists"
-            imageUrl={singer1}
-            // redirectUrl="/artist1"
-          >
-            <h5>Artist 4</h5>
-            <p>Artist</p>
-          </ImageCard>
-          {/* <ImageCard
-            className="popular artists"
-            imageUrl={singer2}
-            // redirectUrl="/artist1"
-          >
-            <h5>Artist 5</h5>
-            <p>Artist</p>
-          </ImageCard>
-          <ImageCard
-            className="popular artists"
-            imageUrl={singer3}
-            // redirectUrl="/artist1"
-          >
-            <h5>Artist 6</h5>
-            <p>Artist</p>
-          </ImageCard> */}
+          {topArtists &&
+            topArtists.topArtists &&
+            topArtists.topArtists.length > 0 &&
+            topArtists.topArtists.map((artist) => (
+              <ImageCard
+                className="popular artists"
+                imageUrl={artist.image}
+                key={artist._id}
+                redirectUrl={`/artist/${artist._id}`}
+              >
+                <h5>{artist.name}</h5>
+                <p>Artist</p>
+              </ImageCard>
+            ))}
         </div>
         <h2>Popular Singles</h2>
         <div className="rows">
@@ -96,7 +68,7 @@ const Home = () => {
               key={track._id}
               className="popular singles"
               imageUrl={track.thumbnailPath}
-              onClick={() => handlePlayTrack(track._id)}
+              onClick={() => handlePlayTrack({ track, queue: topTracks })}
               // redirectUrl={`/track/${track._id}`}
             >
               <h5>{track.name}</h5>

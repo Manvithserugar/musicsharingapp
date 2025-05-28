@@ -10,6 +10,10 @@ const storage = multer.diskStorage({
       cb(null, path.join(__dirname, "../uploads/thumbnails"));
     } else if (file.fieldname === "artistImage") {
       cb(null, path.join(__dirname, "../uploads/artists"));
+    } else if (file.fieldname === "playlistsCoverImage") {
+      cb(null, path.join(__dirname, "../uploads/playlistsCoverImage"));
+    } else if (file.fieldname === "bannerImage") {
+      cb(null, path.join(__dirname, "../uploads/banner"));
     }
   },
   filename: (req, file, cb) => {
@@ -23,7 +27,10 @@ const fileFilter = (req, file, cb) => {
   if (file.fieldname === "musicFile" && file.mimetype.startsWith("audio/")) {
     cb(null, true);
   } else if (
-    (file.fieldname === "thumbnail" || file.fieldname === "artistImage") &&
+    (file.fieldname === "thumbnail" ||
+      file.fieldname === "artistImage" ||
+      file.fieldname === "bannerImage" ||
+      file.fieldname === "playlistsCoverImage") &&
     file.mimetype.startsWith("image/")
   ) {
     cb(null, true);
@@ -42,11 +49,12 @@ const upload = multer({
   fileFilter,
 });
 
-// Update fields to include artistImage
 const uploadMiddleware = upload.fields([
   { name: "musicFile", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
   { name: "artistImage", maxCount: 1 },
+  { name: "bannerImage", maxCount: 1 },
+  { name: "playlistsCoverImage", maxCount: 1 },
 ]);
 
 module.exports = uploadMiddleware;

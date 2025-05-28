@@ -1,0 +1,31 @@
+.hidden-checkbox {
+  display: none;
+}
+
+.custom-checkbox {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.hidden-checkbox:checked + .custom-checkbox {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.check-icon {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hidden-checkbox:checked + .custom-checkbox .check-icon {
+  display: block; /* Show the icon when checked */
+}

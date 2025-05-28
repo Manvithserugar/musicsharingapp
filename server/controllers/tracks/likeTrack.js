@@ -17,7 +17,9 @@ module.exports = async (req, res, next) => {
       throw new appError("Track not found.", 404);
     }
     await session.commitTransaction();
-    res.status(200).json({ message: "Music liked successfully", updatedTrack });
+    res
+      .status(200)
+      .json({ message: "Music liked successfully", success: true });
   } catch (error) {
     if (session) {
       await session.abortTransaction();

@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
-const Track = require("./track"); 
+const Track = require("./track");
 
 const artistSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     image: { type: String, required: true },
+    bannerImage: { type: String, required: true },
     totalPlayCount: { type: Number, default: 0 },
     totalFollowers: { type: Number, default: 0 },
     totalLikes: { type: Number, default: 0 },

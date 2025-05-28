@@ -32,11 +32,13 @@ body {
 
 .rows {
   display: flex;
-  gap: 8px;
-  align-items: center;
+  flex-wrap: wrap; /* Allow items to wrap to next line */
+  gap: 3rem; /* Optional: increase gap for better spacing */
+  align-items: stretch; /* Stretch items to fill row height */
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 8px;
+  justify-content: flex-start;
 }
 
 h2 {

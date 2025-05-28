@@ -28,8 +28,4 @@ const logUserOut = async () => {
   }
 };
 
-export default {
-  signupUser,
-  loginUser,
-  logUserOut,
-};
+export default { signupUser, loginUser, logUserOut };

@@ -8,6 +8,7 @@ import {
   AiOutlinePlaySquare,
   AiOutlineUpload,
   AiOutlinePlusSquare,
+  AiOutlineHeart,
 } from "react-icons/ai";
 import { IoAlbumsOutline } from "react-icons/io5";
 import { LuMicVocal } from "react-icons/lu";
@@ -28,9 +29,9 @@ const LeftPanel = () => {
   ];
 
   const userSpecificEntries = [
-    { id: "recent", label: "Recent", icon: <AiOutlineClockCircle size={30} /> },
+    // { id: "recent", label: "Recent", icon: <AiOutlineClockCircle size={30} /> },
     {
-      id: "user-profile",
+      id: "profile",
       label: "Your Profile",
       icon: <AiOutlineUser size={30} />,
     },
@@ -40,10 +41,11 @@ const LeftPanel = () => {
     //   icon: <LuMicVocal size={30} />,
     // },
     { id: "saved", label: "Saved", icon: <MdBookmarkBorder size={30} /> },
+    { id: "liked", label: "Liked", icon: <AiOutlineHeart size={30} /> },
     {
-      id: "create-playlist",
-      label: "Create Playlist",
-      icon: <AiOutlinePlusSquare size={30} />,
+      id: "playlist",
+      label: "Playlist",
+      icon: <AiOutlinePlaySquare size={30} />,
     },
   ];
 

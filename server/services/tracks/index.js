@@ -4,6 +4,8 @@ const getTopTracks = require("./getTopTracks");
 const deleteTrack = require("./deleteTrack");
 const likeTrack = require("./likeTrack");
 const dislikeTrack = require("./dislikeTrack");
+const saveTrack = require("./saveTrack");
+const unsaveTrack = require("./unsaveTrack");
 
 module.exports = {
   uploadTrack,
@@ -12,4 +14,6 @@ module.exports = {
   deleteTrack,
   likeTrack,
   dislikeTrack,
+  saveTrack,
+  unsaveTrack,
 };
