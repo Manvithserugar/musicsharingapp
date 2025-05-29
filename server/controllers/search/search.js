@@ -9,8 +9,10 @@ module.exports = async (req, res, next) => {
       return next(new appError("Search query is required.", 400));
     }
 
-    const tracks = await search(query.trim());
-    res.status(200).json({ message: "Tracks retrieved successfully.", tracks });
+    const results = await search(query.trim());
+    res
+      .status(200)
+      .json({ message: "Tracks retrieved successfully.", results });
   } catch (error) {
     console.log("error during search", error);
     next(error);
